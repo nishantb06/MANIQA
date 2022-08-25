@@ -11,7 +11,7 @@ from data.pipal22_test import PIPAL22
 from tqdm import tqdm
 
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 
 def setup_seed(seed):
@@ -64,10 +64,10 @@ if __name__ == '__main__':
     config = Config({
         # dataset path
         "db_name": "PIPAL",
-        "test_dis_path": "/mnt/data_16TB/ysd21/IQA/NTIRE2022_NR_Valid_Dis/",
+        "test_dis_path": "/home/nishantbhansali/MANIQA/input_maniqa",
         
         # optimization
-        "batch_size": 10,
+        "batch_size": 3,
         "num_avg_val": 1,
         "crop_size": 224,
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         # load & save checkpoint
         "valid": "./output/valid",
         "valid_path": "./output/valid/inference_valid",
-        "model_path": "./output/models/model_maniqa/epoch1"
+        "model_path": "/home/nishantbhansali/MANIQA/MANIQA_models/ckpt_valid"
     })
 
     if not os.path.exists(config.valid):
@@ -98,6 +98,7 @@ if __name__ == '__main__':
         drop_last=True,
         shuffle=False
     )
+    print(f"length of test_dataset is {len(test_dataset)}")
     net = torch.load(config.model_path)
     net = net.cuda()
 
