@@ -6,12 +6,12 @@ import random
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from config import Config
-from utils.inference_process import ToTensor, Normalize, five_point_crop, sort_file
+from utils.inference_process import ToTensor, Normalize, five_point_crop, sort_file,RandCrop
 from data.pipal22_test import PIPAL22
 from tqdm import tqdm
 
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '5'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 
 def setup_seed(seed):
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # data load
     test_dataset = PIPAL22(
         dis_path=config.test_dis_path,
-        transform=transforms.Compose([Normalize(0.5, 0.5), ToTensor()]),
+        transform=transforms.Compose([RandCrop(224), Normalize(0.5, 0.5), ToTensor()]),
     )
     test_loader = DataLoader(
         dataset=test_dataset,

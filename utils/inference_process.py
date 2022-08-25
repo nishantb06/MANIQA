@@ -65,11 +65,24 @@ class RandCrop(object):
         d_name = sample['d_name']
 
         c, h, w = d_img.shape
+        # print(c, h, w)
         new_h = self.patch_size
         new_w = self.patch_size
+        if new_w > w or new_h > h:
+            l = (new_w - w) // 2 if new_w > w else 0
+            t = (new_h - h) // 2 if new_h > h else 0
+            r = (new_w - w + 1) // 2 if new_w > w else 0
+            b = (new_h - h + 1) // 2 if new_h > h else 0
 
-        top = np.random.randint(0, h - new_h)
-        left = np.random.randint(0, w - new_w)
+            d_img = np.pad(d_img, ((0,0),(t, b), (l, r)))  # numpy uses fill value 0
+            _, h, w = d_img.shape
+            if new_w == w and new_h == h:
+                return {
+                    'd_img_org': d_img,
+                    'd_name': d_name
+                }
+        top = 0 if h - new_h == 0 else np.random.randint(0, h - new_h) 
+        left = 0 if w - new_w == 0 else np.random.randint(0, w - new_w)
         ret_d_img = d_img[:, top: top + new_h, left: left + new_w]
         sample = {
             'd_img_org': ret_d_img,

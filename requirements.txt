@@ -1,11 +1,9 @@
 numpy
 opencv-python
-torch
+torch==1.8
 torchvision
 torchsummary
 tensorboardX
-logging
 tqdm
-json
 einops
 pandas

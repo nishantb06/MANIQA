@@ -5,3 +5,6 @@ Dis/
 *.zip
 
 output/
+MANIQA_models
+input_maniqa
+.vscode
